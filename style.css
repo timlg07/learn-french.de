@@ -1,0 +1,156 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+button {
+    border: 0;
+    background-color: #333;
+    color: #f0f0f0;
+}
+button:hover, button:focus, button:active {
+    outline: 3px solid #333;
+    outline-offset: 3px;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+#lecons {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1080px;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: .25em;
+    column-gap: .75em;
+
+    border: 3px solid #777;
+    padding-block-start: .75em;
+    padding-block-end: 1.25em;
+    padding-inline: 1.5em;
+}
+@media screen and (min-width: 500px) {
+    #lecons {
+        grid-template-columns: repeat(4, 1fr);
+    }    
+}
+@media screen and (min-width: 800px) {
+    #lecons {
+        grid-template-columns: repeat(6, 1fr);
+    }    
+}
+@media screen and (min-width: 1080px) {
+    #lecons {
+        grid-template-columns: repeat(8, 1fr);
+    }    
+}
+#lecons .btns {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(50%);
+    display: flex;
+    gap: .5em;
+}
+#lecons .btns button {
+    font-size: .7em;
+    padding: .25em 1em;
+    min-width: min(150px, 40vw);
+    cursor: pointer;
+    background-color: #777;
+    color: #fff;
+    outline-color: #777;
+}
+
+#score {
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+}
+
+#question {
+    font-size: 2em;
+    margin-bottom: 1em;
+}
+
+#answer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+#answerInput {
+    font-size: 1.5rem;
+    padding: 0.5em;
+    margin-bottom: calc(1em + 1px);
+    border: 0;
+    border-bottom: 2px solid #333;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+#answerInput:focus,
+#answerInput:active {
+    outline: none;
+    border-bottom: 3px solid #000;
+    margin-bottom: 1em;
+}
+
+#check {
+    font-size: 1em;
+    padding: 0.5em;
+    cursor: pointer;
+}
+
+#result {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+#continue {
+    font-size: 1em;
+    padding: 0.5em;
+    cursor: pointer;
+    display: none;
+}
+
+footer {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.result-notice {
+    font-size: .8em;
+}
+.result-notice.correct {
+    color: #1c8f1e;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.result-notice.incorrect {
+    color: #d32e22;
+}
