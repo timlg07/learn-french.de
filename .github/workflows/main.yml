@@ -1,0 +1,18 @@
+on: push
+name: 🚀 Publish on Push
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Fetch Latest Code
+      uses: actions/checkout@v2
+    
+    - name: 📂 Deploy Files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@2.0.0
+      env:
+        FTP_SERVER:   ${{ secrets.ftp_server   }}
+        FTP_USERNAME: ${{ secrets.ftp_username }}
+        FTP_PASSWORD: ${{ secrets.ftp_password }}
+        PORT: 21
+        METHOD: ftp
