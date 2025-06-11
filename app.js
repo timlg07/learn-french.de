@@ -9,14 +9,32 @@ const continueButton = document.getElementById('continue');
 
 let data = [];
 let currentQuestions = [];
+let trueRandomSelection = false;
 
 function chooseRandomQuestion() {
     if (currentQuestions.length === 0) {
         alert('No words available. Please select at least one category.');
         return window.currentQuestion;
     }
-    const randomIndex = Math.floor(Math.random() * currentQuestions.length);
-    return currentQuestions[randomIndex];
+    let questions = currentQuestions;
+    if (questions.length > 1) {
+        // do not repeat same question twice
+        questions = questions.filter(q => q !== window.currentQuestion);
+    }
+    if (!trueRandomSelection) {
+        // prefer questions never answered correct
+        let i = 0;
+        while (true) {
+            const neverAnsweredCorrectITimes = questions.filter(q => q.correct === i);
+            if (neverAnsweredCorrectITimes.length > 0) {
+                questions = neverAnsweredCorrectITimes;
+                break;
+            }
+            i++;
+        }
+    }
+    const randomIndex = Math.floor(Math.random() * questions.length);
+    return questions[randomIndex];
 }
 
 function displayQuestion() {
@@ -56,6 +74,7 @@ function checkAnswer() {
     console.log(transformDataAnswer(currentQuestion.fr), transformAnswer(answerInput.value));
     if (transformDataAnswer(currentQuestion.fr).includes(transformAnswer(answerInput.value))) {
         result.innerHTML = '<p class="result-notice correct"><span>Correct!</span></p><strong>' + currentQuestion.de + ' = ' + currentQuestion.fr + '</strong>';
+        currentQuestion.correct++;
         if (answerInput.value === currentQuestion.fr) {
             updateScore(5);
         } else {
@@ -63,6 +82,7 @@ function checkAnswer() {
         }
     } else {
         result.innerHTML = '<p class="result-notice incorrect"><span>Incorrect!</span><br>The correct answer is:</p><strong>' + currentQuestion.fr + '</strong>';
+        currentQuestion.wrong++;
         updateScore(-1);
     }
 
@@ -135,6 +155,7 @@ async function setup() {
                 unite: Number(item['Unité']),
                 lecon: Number(item['Leçon']),
                 phonetic: item['PHONETIK'],
+                correct: 0, wrong: 0
             };
             if (item['DEUTSCH'] && item['FRANZÖSISCH']) {
                 return newItem;
